@@ -28,7 +28,7 @@ namespace NBoardEditor
 		private void SetupInputActions() {
 			inputHandler.Actions.Editor.Place.performed += OnPlacePerformed;
 			inputHandler.Actions.Editor.Remove.performed += OnRemovePerformed;
-			inputHandler.Actions.Editor.Zoom.performed += OnZoomPerformed;
+
 		}
 
 		private async UniTaskVoid LoadTilePrefab() {
@@ -85,18 +85,10 @@ namespace NBoardEditor
 			gridManager.RemovePosition(gridPosition);
 		}
 
-		private void OnZoomPerformed(InputAction.CallbackContext context) {
-			if (!Camera.main) {
-				return;
-			}
-
-			Camera.main.orthographicSize += context.ReadValue<float>();
-		}
-
 		public void Dispose() {
 			inputHandler.Actions.Editor.Place.performed -= OnPlacePerformed;
 			inputHandler.Actions.Editor.Remove.performed -= OnRemovePerformed;
-			inputHandler.Actions.Editor.Zoom.performed -= OnZoomPerformed;
+
 		}
 	}
 }

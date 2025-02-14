@@ -7,22 +7,14 @@ namespace NBoardEditor
 	public class GridManager
 	{
 		private const int GridSize = 20;
-		private const int GridRadius = GridSize / 2;
+		public const int GridRadius = GridSize / 2;
 
-		private Dictionary<Vector3Int, GameObject> tiles = new();
+		private readonly Dictionary<Vector3Int, GameObject> tiles = new();
 
 		[Inject]
 		private GridManager(GameObject grid) {
-
-			if (!Camera.main) {
-				return;
-			}
-
-			Camera.main.transform.position = Vector3.one * GridRadius;
-			Camera.main.orthographicSize = GridRadius;
-
 			grid.transform.position = new Vector3(GridRadius, 0, GridRadius);
-			grid.transform.localScale = new Vector3(GridRadius, 1, GridRadius);
+			grid.transform.localScale = new Vector3(GridSize, 10, GridSize) / 10f;
 		}
 
 		public Vector3Int ConvertToGridPosition(Vector3 position) {
