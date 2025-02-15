@@ -1,7 +1,7 @@
 ﻿namespace Board.Code
 {
-	public class BoardService
+	public class BoardManager
 	{
-		
+
 	}
 }
