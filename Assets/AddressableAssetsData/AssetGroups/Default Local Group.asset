@@ -20,6 +20,21 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 5d65a722cdd3f99449590e2a09bdc495
+    m_Address: UI/Element/UITileTypeButton
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 6f71035a42fb3bc438b304808bcecc03
+    m_Address: UI/UIBoardEditor
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: ac9ed95cda4cfce48bf551bfd62b0db7
+    m_Address: BoardEditor/EditorTile
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e86a64a168547422db6122e2668271de
     m_Address: Board/Tile
     m_ReadOnly: 0

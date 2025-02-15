@@ -1,7 +1,9 @@
 ﻿using System;
 using Cysharp.Threading.Tasks;
+using NBoardEditor.UI;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
@@ -14,15 +16,24 @@ namespace NBoardEditor
 		private readonly GridManager gridManager;
 		private readonly InputHandler inputHandler;
 
-		private GameObject tilePrefab;
+		private BoardEditorTileObject tilePrefab;
+		private TileType selectedTileType;
+
+		public event Action OnBoardUpdated;
 
 		[Inject]
-		public PlacementHandler(GridManager gridManager, InputHandler inputHandler) {
+		public PlacementHandler(GridManager gridManager, InputHandler inputHandler, UIHandler uiHandler) {
 			this.gridManager = gridManager;
 			this.inputHandler = inputHandler;
 
 			SetupInputActions();
 			LoadTilePrefab().Forget();
+
+			uiHandler.OnTileTypeSelected += OnTileTypeSelected;
+		}
+
+		private void OnTileTypeSelected(TileType tileType) {
+			selectedTileType = tileType;
 		}
 
 		private void SetupInputActions() {
@@ -32,12 +43,16 @@ namespace NBoardEditor
 		}
 
 		private async UniTaskVoid LoadTilePrefab() {
-			AsyncOperationHandle<GameObject> tilePrefabHandle = Addressables.LoadAssetAsync<GameObject>("Board/Tile");
+			AsyncOperationHandle<GameObject> tilePrefabHandle = Addressables.LoadAssetAsync<GameObject>("BoardEditor/EditorTile");
 			tilePrefabHandle.ReleaseHandleOnCompletion();
-			tilePrefab = await tilePrefabHandle;
+			tilePrefab = (await tilePrefabHandle).GetComponent<BoardEditorTileObject>();
 		}
 
 		private Vector3Int GetGridPositionClicked() {
+
+			if (EventSystem.current.IsPointerOverGameObject()) {
+				return default;
+			}
 
 			Vector2 mousePosition = Mouse.current.position.ReadValue();
 
@@ -66,23 +81,44 @@ namespace NBoardEditor
 				return;
 			}
 
-			Vector3Int gridPosition = GetGridPositionClicked();
+			if (selectedTileType == null) {
+				Debug.LogWarning("Select a tile type first.");
+				return;
+			}
 
-			if (gridManager.ContainsPosition(gridPosition)) {
+			Vector3Int gridPosition = GetGridPositionClicked();
+			if (gridPosition == default(Vector3Int)) {
+				return;
+			}
+
+			if (gridManager.TryGetTileAtPosition(gridPosition, out Tile existingTile)) {
+				if (existingTile.TileType == selectedTileType) {
+					return;
+				}
+
+				existingTile.UpdateTileType(selectedTileType);
+
+				OnBoardUpdated?.Invoke();
+
 				return;
 			}
 
 			Vector3 placementPosition = gridPosition;
 			placementPosition.y = 0.7f;
 
-			GameObject tile = Object.Instantiate(tilePrefab, placementPosition, Quaternion.identity);
+			BoardEditorTileObject tileObject = Object.Instantiate(tilePrefab, placementPosition, Quaternion.identity);
+			Tile tile = new Tile(gridPosition, selectedTileType, tileObject);
 
-			gridManager.AddTile(gridPosition, tile);
+			gridManager.AddTile(tile);
+
+			OnBoardUpdated?.Invoke();
 		}
 
 		private void OnRemovePerformed(InputAction.CallbackContext context) {
 			Vector3Int gridPosition = GetGridPositionClicked();
 			gridManager.RemovePosition(gridPosition);
+
+			OnBoardUpdated?.Invoke();
 		}
 
 		public void Dispose() {

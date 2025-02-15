@@ -1,6 +1,5 @@
 using Zenject;
 using UnityEngine;
-using System.Collections;
 
 public class GameInstaller : MonoInstaller
 {
