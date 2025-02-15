@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NBoardEditor.UI.Elements;
@@ -19,6 +20,11 @@ namespace NBoardEditor.UI
 
 			CreateTileTypeButtons().Forget();
 			uiHandler.OnBoardValidationUpdated += UpdateBoardValidationStatus;
+			View.OnLoadButtonClicked += LoadButtonClicked;
+			View.OnSaveButtonClicked += SaveButtonClicked;
+			uiHandler.OnBoardLoaded += OnBoardLoaded;
+
+			View.SetBoardName($"board{DateTime.Now:yyyyMMddHHmmss}");
 		}
 
 		private async UniTaskVoid CreateTileTypeButtons() {
@@ -35,6 +41,26 @@ namespace NBoardEditor.UI
 
 		private void UpdateBoardValidationStatus(bool passed, string message) {
 			View.SetBoardValidationStatus(passed, message);
+		}
+
+		private void LoadButtonClicked() {
+			uiHandler.OnLoadButtonClicked?.Invoke();
+		}
+
+		private void SaveButtonClicked(string boardName) {
+			uiHandler.OnSaveButtonClicked?.Invoke(boardName);
+		}
+
+		private void OnBoardLoaded(string boardName) {
+			View.SetBoardName(boardName);
+		}
+
+		public override void OnClose() {
+			base.OnClose();
+
+			uiHandler.OnBoardValidationUpdated -= UpdateBoardValidationStatus;
+			View.OnLoadButtonClicked -= LoadButtonClicked;
+			View.OnSaveButtonClicked -= SaveButtonClicked;
 		}
 	}
 }

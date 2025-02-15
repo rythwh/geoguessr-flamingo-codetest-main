@@ -1,8 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace NBoardEditor
 {
-	[System.Serializable]
+	[Serializable]
 	public class TileType
 	{
 		public TileTypeEnum tileType;

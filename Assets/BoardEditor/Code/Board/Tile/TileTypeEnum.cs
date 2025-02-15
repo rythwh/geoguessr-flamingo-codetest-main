@@ -1,5 +1,8 @@
-﻿namespace NBoardEditor
+﻿using System;
+
+namespace NBoardEditor
 {
+	[Serializable]
 	public enum TileTypeEnum
 	{
 		Empty,

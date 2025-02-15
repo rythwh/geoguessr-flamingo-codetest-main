@@ -1,6 +1,5 @@
 ﻿using System;
 using RyUI;
-using UnityEngine;
 
 namespace NBoardEditor.UI.Elements
 {

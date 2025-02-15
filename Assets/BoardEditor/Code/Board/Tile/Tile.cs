@@ -1,23 +1,29 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 namespace NBoardEditor
 {
+	[Serializable]
 	public class Tile
 	{
-		public Vector3Int Position { get; }
-		public TileType TileType { get; private set; }
+		[SerializeField] private Vector3Int position;
+		[SerializeField] private TileTypeEnum tileType;
+
+		public Vector3Int Position => position;
+		public TileTypeEnum TileType => tileType;
 		public BoardEditorTileObject TileObject { get; private set; }
 
-		public Tile(Vector3Int position, TileType tileType, BoardEditorTileObject tileObject) {
-			Position = position;
-			TileType = tileType;
+		public Tile(Vector3Int position, TileTypeEnum tileType, Sprite tileTypeSprite, BoardEditorTileObject tileObject) {
+			this.position = position;
 			TileObject = tileObject;
-			tileObject.SetImage(tileType.tileImage);
+
+			UpdateTileType(tileType, tileTypeSprite);
 		}
 
-		public void UpdateTileType(TileType tileType) {
-			TileType = tileType;
-			TileObject.SetImage(tileType.tileImage);
+		public void UpdateTileType(TileTypeEnum tileType, Sprite tileTypeSprite) {
+			this.tileType = tileType;
+			TileObject.SetImage(tileTypeSprite);
 		}
 
 		public void Destroy() {

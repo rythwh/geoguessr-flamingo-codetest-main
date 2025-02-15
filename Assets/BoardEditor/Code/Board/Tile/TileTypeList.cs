@@ -7,5 +7,9 @@ namespace NBoardEditor
 	public class TileTypeList : ScriptableObject
 	{
 		public List<TileType> tileTypes;
+
+		public Sprite GetSprite(TileTypeEnum tileType) {
+			return tileTypes.Find(t => t.tileType == tileType).tileImage;
+		}
 	}
 }
