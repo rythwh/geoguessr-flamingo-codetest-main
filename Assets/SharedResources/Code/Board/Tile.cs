@@ -2,7 +2,7 @@
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace NBoardEditor
+namespace NShared.Board
 {
 	[Serializable]
 	public class Tile
@@ -12,13 +12,24 @@ namespace NBoardEditor
 
 		public Vector3Int Position => position;
 		public TileTypeEnum TileType => tileType;
-		public BoardEditorTileObject TileObject { get; private set; }
+		public ITileObject TileObject { get; private set; }
 
-		public Tile(Vector3Int position, TileTypeEnum tileType, Sprite tileTypeSprite, BoardEditorTileObject tileObject) {
+		public Tile(Vector3Int position, TileTypeEnum tileType, ITileObject tileObject) {
+			this.position = position;
+			TileObject = tileObject;
+			UpdateTileType(tileType);
+		}
+
+		public Tile(Vector3Int position, TileTypeEnum tileType, Sprite tileTypeSprite, ITileObject tileObject) {
 			this.position = position;
 			TileObject = tileObject;
 
 			UpdateTileType(tileType, tileTypeSprite);
+		}
+
+		public void UpdateTileType(TileTypeEnum tileType) {
+			this.tileType = tileType;
+			// TODO Change the tile colour
 		}
 
 		public void UpdateTileType(TileTypeEnum tileType, Sprite tileTypeSprite) {

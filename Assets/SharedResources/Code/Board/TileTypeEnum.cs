@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NBoardEditor
+namespace NShared.Board
 {
 	[Serializable]
 	public enum TileTypeEnum

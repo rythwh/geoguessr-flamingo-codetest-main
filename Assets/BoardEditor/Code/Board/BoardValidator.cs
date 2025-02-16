@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using NBoardEditor.UI;
+using NShared.Board;
 using Zenject;
 
 namespace NBoardEditor

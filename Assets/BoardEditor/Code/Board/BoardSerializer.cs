@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using NBoardEditor.UI;
+using NShared.Board;
 using UnityEditor;
 using UnityEngine;
 using Zenject;
@@ -8,8 +9,6 @@ namespace NBoardEditor
 {
 	public class BoardSerializer
 	{
-		private static readonly string boardsFolder = Path.Combine(Application.streamingAssetsPath, "Boards");
-
 		private readonly BoardManager boardManager;
 		private readonly BoardValidator boardValidator;
 		private readonly UIHandler uiHandler;
@@ -38,11 +37,11 @@ namespace NBoardEditor
 				return;
 			}
 
-			if (!Directory.Exists(boardsFolder)) {
-				Directory.CreateDirectory(boardsFolder);
+			if (!Directory.Exists(BoardData.BoardsFolderPath)) {
+				Directory.CreateDirectory(BoardData.BoardsFolderPath);
 			}
 
-			string boardPath = Path.Combine(boardsFolder, $"{boardName}.json");
+			string boardPath = Path.Combine(BoardData.BoardsFolderPath, $"{boardName}.json");
 			boardData.PrepareForSerialization();
 			string boardJson = JsonUtility.ToJson(boardData, true);
 			File.WriteAllText(boardPath, boardJson);
@@ -51,7 +50,7 @@ namespace NBoardEditor
 		}
 
 		private void DeserializeBoard() {
-			string boardFile = EditorUtility.OpenFilePanel("Select Board File", boardsFolder, "json");
+			string boardFile = EditorUtility.OpenFilePanel("Select Board File", BoardData.BoardsFolderPath, "json");
 
 			if (string.IsNullOrEmpty(boardFile)) {
 				Debug.LogWarning("No file selected");

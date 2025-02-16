@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
+using NShared;
+using NShared.Board;
 using UnityEngine;
-using UnityEngine.AddressableAssets;
-using UnityEngine.ResourceManagement.AsyncOperations;
 using Zenject;
 using Object = UnityEngine.Object;
 
@@ -23,6 +23,10 @@ namespace NBoardEditor
 		public BoardManager(TileTypeList tileTypeList) {
 			this.tileTypeList = tileTypeList;
 			LoadTilePrefab().Forget();
+		}
+
+		private async UniTaskVoid LoadTilePrefab() {
+			TilePrefab = await Addressable.Load<BoardEditorTileObject>("BoardEditor/EditorTile");
 		}
 
 		public bool AddTile(Tile tile) {
@@ -66,12 +70,6 @@ namespace NBoardEditor
 			foreach (Tile tile in loadedBoardData.Tiles) {
 				AddTile(CreateTile(tile.Position, tile.TileType));
 			}
-		}
-
-		private async UniTaskVoid LoadTilePrefab() {
-			AsyncOperationHandle<GameObject> tilePrefabHandle = Addressables.LoadAssetAsync<GameObject>("BoardEditor/EditorTile");
-			tilePrefabHandle.ReleaseHandleOnCompletion();
-			TilePrefab = (await tilePrefabHandle).GetComponent<BoardEditorTileObject>();
 		}
 
 		public Tile CreateTile(Vector3Int gridPosition, TileTypeEnum selectedTileType) {

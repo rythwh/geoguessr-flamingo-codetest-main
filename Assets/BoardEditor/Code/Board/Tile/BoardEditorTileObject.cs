@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿using NShared.Board;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace NBoardEditor
 {
-	public class BoardEditorTileObject : MonoBehaviour
+	public class BoardEditorTileObject : MonoBehaviour, ITileObject
 	{
 		[SerializeField] private MeshRenderer tileMeshRenderer;
 		[SerializeField] private Image tileTypeImage;

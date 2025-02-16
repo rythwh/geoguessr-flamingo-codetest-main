@@ -455,7 +455,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 553304927}
-  - component: {fileID: 553304926}
   m_Layer: 0
   m_Name: Board
   m_TagString: Untagged
@@ -463,18 +462,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &553304926
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553304925}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9844da5f61aa38544b5e57ec70cae20d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &553304927
 Transform:
   m_ObjectHideFlags: 0
@@ -500,6 +487,7 @@ GameObject:
   m_Component:
   - component: {fileID: 588177926}
   - component: {fileID: 588177925}
+  - component: {fileID: 588177927}
   m_Layer: 0
   m_Name: SceneContext
   m_TagString: Untagged
@@ -521,7 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 553304926}
+  - {fileID: 588177927}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
@@ -554,6 +542,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &588177927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588177924}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9844da5f61aa38544b5e57ec70cae20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  boardFileName: board20250215235308
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0

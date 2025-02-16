@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using NShared.Board;
 using UnityEngine;
 
 namespace NBoardEditor

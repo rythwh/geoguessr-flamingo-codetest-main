@@ -1,5 +1,6 @@
 ﻿using System;
 using NBoardEditor.UI;
+using NShared.Board;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -66,11 +67,6 @@ namespace NBoardEditor
 		}
 
 		private void OnPlacePerformed(InputAction.CallbackContext context) {
-
-			if (!boardManager.TilePrefab) {
-				Debug.Log("Waiting for tile prefab addressable to load...");
-				return;
-			}
 
 			if (selectedTileType == null) {
 				Debug.LogWarning("Select a tile type first.");

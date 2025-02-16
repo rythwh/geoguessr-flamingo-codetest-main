@@ -1,19 +1,15 @@
-using Zenject;
+using NGame;
 using UnityEngine;
+using Zenject;
 
 public class GameInstaller : MonoInstaller
 {
-	public override void InstallBindings()
-	{
-		Container.Bind<string>().FromInstance("Hello World!");
-		Container.Bind<Greeter>().AsSingle().NonLazy();
-	}
-}
+	[SerializeField] private string boardFileName;
 
-public class Greeter
-{
-	public Greeter(string message)
-	{
-		Debug.Log(message);
+	public override void InstallBindings() {
+
+		Container.BindInstance(boardFileName);
+
+		Container.Bind<BoardManager>().AsSingle().NonLazy();
 	}
 }

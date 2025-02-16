@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
-namespace NBoardEditor
+namespace NShared.Board
 {
 	[Serializable]
 	public class BoardData
 	{
+		public static readonly string BoardsFolderPath = Path.Combine(Application.streamingAssetsPath, "Boards");
+
 		[NonSerialized] private HashSet<Tile> tiles = new();
 		public HashSet<Tile> Tiles => tiles;
 
