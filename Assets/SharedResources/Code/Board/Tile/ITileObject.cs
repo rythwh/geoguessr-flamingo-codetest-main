@@ -5,6 +5,11 @@ namespace NShared.Board
 	public interface ITileObject
 	{
 		GameObject gameObject { get; }
-		void SetImage(Sprite sprite);
+
+		virtual void SetImage(Sprite sprite) {
+		}
+
+		virtual void SetMaterial(Material material) {
+		}
 	}
 }

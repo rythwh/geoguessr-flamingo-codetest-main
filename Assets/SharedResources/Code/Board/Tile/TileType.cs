@@ -9,5 +9,6 @@ namespace NBoardEditor
 	{
 		public TileTypeEnum tileType;
 		public Sprite tileImage;
+		public Material tileMaterial;
 	}
 }

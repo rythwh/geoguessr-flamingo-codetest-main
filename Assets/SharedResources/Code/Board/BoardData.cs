@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using UnityEngine;
 
 namespace NShared.Board
@@ -21,6 +22,10 @@ namespace NShared.Board
 
 		public void RestoreAfterDeserialization() {
 			tiles = new HashSet<Tile>(serializedTiles);
+		}
+
+		public Tile GetStartTile() {
+			return tiles.First(t => t.TileType == TileTypeEnum.Start);
 		}
 	}
 }

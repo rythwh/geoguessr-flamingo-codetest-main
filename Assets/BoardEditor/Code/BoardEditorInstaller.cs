@@ -17,7 +17,7 @@ namespace NBoardEditor
             Container.BindInstance(canvas);
             Container.BindInstance(tileTypeListSO);
 
-            Container.Bind<BoardManager>().AsSingle().NonLazy();
+            Container.Bind<EditorBoardManager>().AsSingle().NonLazy();
             Container.Bind<BoardSerializer>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<UIManager>().AsSingle();

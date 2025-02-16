@@ -6,7 +6,7 @@
                 "y": 1,
                 "z": 15
             },
-            "tileType": 1
+            "tileType": 0
         },
         {
             "position": {
@@ -262,7 +262,7 @@
                 "y": 1,
                 "z": 4
             },
-            "tileType": 3
+            "tileType": 1
         },
         {
             "position": {
@@ -294,7 +294,7 @@
                 "y": 1,
                 "z": 4
             },
-            "tileType": 0
+            "tileType": 2
         },
         {
             "position": {

@@ -11,7 +11,7 @@ namespace NBoardEditor
 	public class PlacementHandler : IDisposable
 	{
 		private readonly GridManager gridManager;
-		private readonly BoardManager boardManager;
+		private readonly EditorBoardManager editorBoardManager;
 		private readonly InputHandler inputHandler;
 
 		private TileType selectedTileType;
@@ -19,9 +19,9 @@ namespace NBoardEditor
 		public event Action OnBoardUpdated;
 
 		[Inject]
-		public PlacementHandler(GridManager gridManager, BoardManager boardManager, InputHandler inputHandler, UIHandler uiHandler) {
+		public PlacementHandler(GridManager gridManager, EditorBoardManager editorBoardManager, InputHandler inputHandler, UIHandler uiHandler) {
 			this.gridManager = gridManager;
-			this.boardManager = boardManager;
+			this.editorBoardManager = editorBoardManager;
 			this.inputHandler = inputHandler;
 
 			SetupInputActions();
@@ -78,7 +78,7 @@ namespace NBoardEditor
 				return;
 			}
 
-			if (boardManager.TryGetTileAtPosition(gridPosition, out Tile existingTile)) {
+			if (editorBoardManager.TryGetTileAtPosition(gridPosition, out Tile existingTile)) {
 				if (existingTile.TileType == selectedTileType.tileType) {
 					return;
 				}
@@ -90,16 +90,16 @@ namespace NBoardEditor
 				return;
 			}
 
-			Tile tile = boardManager.CreateTile(gridPosition, selectedTileType.tileType);
+			Tile tile = editorBoardManager.CreateTile(gridPosition, selectedTileType.tileType);
 
-			boardManager.AddTile(tile);
+			editorBoardManager.AddTile(tile);
 
 			OnBoardUpdated?.Invoke();
 		}
 
 		private void OnRemovePerformed(InputAction.CallbackContext context) {
 			Vector3Int gridPosition = GetGridPositionClicked();
-			boardManager.RemovePosition(gridPosition);
+			editorBoardManager.RemovePosition(gridPosition);
 
 			OnBoardUpdated?.Invoke();
 		}

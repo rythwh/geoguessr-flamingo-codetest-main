@@ -1,12 +1,15 @@
-﻿using NShared.Board;
+﻿using System;
+using NShared.Board;
 using UnityEngine;
 
 namespace NGame
 {
 	public class TileObject : MonoBehaviour, ITileObject
 	{
-		public void SetImage(Sprite sprite) {
-			throw new System.NotImplementedException();
+		[SerializeField] private new Renderer renderer;
+
+		public void SetMaterial(Material material) {
+			renderer.material = material;
 		}
 	}
 }

@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
 namespace NBoardEditor
 {
 	[Serializable]
-	public class BoardManager {
+	public class EditorBoardManager {
 
 		private readonly TileTypeList tileTypeList;
 
@@ -20,7 +20,7 @@ namespace NBoardEditor
 		public BoardEditorTileObject TilePrefab { get; private set; }
 
 		[Inject]
-		public BoardManager(TileTypeList tileTypeList) {
+		public EditorBoardManager(TileTypeList tileTypeList) {
 			this.tileTypeList = tileTypeList;
 			LoadTilePrefab().Forget();
 		}

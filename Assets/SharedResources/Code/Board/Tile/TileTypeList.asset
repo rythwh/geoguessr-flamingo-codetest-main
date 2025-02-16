@@ -15,9 +15,13 @@ MonoBehaviour:
   tileTypes:
   - tileType: 0
     tileImage: {fileID: 21300000, guid: e9840b6007a15f14d97af5ad4a46b10f, type: 3}
+    tileMaterial: {fileID: 2100000, guid: a3d8e6ca171d4410fadaf0032c6dda2e, type: 2}
   - tileType: 1
     tileImage: {fileID: 21300000, guid: 0d6a77c77d55a844e86b605d6f885b80, type: 3}
+    tileMaterial: {fileID: 2100000, guid: 76e73f3e9129d4c00b1ac4d54a095af6, type: 2}
   - tileType: 2
     tileImage: {fileID: 21300000, guid: d83d8a1700d57c04d89c863a921afa4a, type: 3}
+    tileMaterial: {fileID: 2100000, guid: ac958c9ae0aee4688b563a6af98d39de, type: 2}
   - tileType: 3
     tileImage: {fileID: 21300000, guid: 7013b115462aa02498615fb84b6e1754, type: 3}
+    tileMaterial: {fileID: 2100000, guid: e6f043715c282455f8e2e3e9cf7eb07c, type: 2}

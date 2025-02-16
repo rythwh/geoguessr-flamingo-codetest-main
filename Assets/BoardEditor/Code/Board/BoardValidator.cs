@@ -8,12 +8,12 @@ namespace NBoardEditor
 {
 	public class BoardValidator
 	{
-		private readonly BoardManager boardManager;
+		private readonly EditorBoardManager editorBoardManager;
 		private readonly UIHandler uiHandler;
 
 		[Inject]
-		public BoardValidator(PlacementHandler placementHandler, BoardManager boardManager, UIHandler uiHandler) {
-			this.boardManager = boardManager;
+		public BoardValidator(PlacementHandler placementHandler, EditorBoardManager editorBoardManager, UIHandler uiHandler) {
+			this.editorBoardManager = editorBoardManager;
 			this.uiHandler = uiHandler;
 
 			placementHandler.OnBoardUpdated += OnBoardUpdated;
@@ -42,27 +42,27 @@ namespace NBoardEditor
 		}
 
 		private bool ValidateStartTile() {
-			return boardManager.BoardData.Tiles.Count(t => t.TileType == TileTypeEnum.Start) == 1;
+			return editorBoardManager.BoardData.Tiles.Count(t => t.TileType == TileTypeEnum.Start) == 1;
 		}
 
 		private bool ValidateLoop() {
 
 			HashSet<Tile> checkedTiles = new();
 			Queue<Tile> frontierTiles = new Queue<Tile>();
-			frontierTiles.Enqueue(boardManager.BoardData.Tiles.FirstOrDefault(t => t.TileType == TileTypeEnum.Start));
+			frontierTiles.Enqueue(editorBoardManager.BoardData.Tiles.FirstOrDefault(t => t.TileType == TileTypeEnum.Start));
 
 			while (frontierTiles.Count > 0) {
 				Tile currentTile = frontierTiles.Dequeue();
 				if (!checkedTiles.Add(currentTile)) {
 					continue;
 				}
-				foreach (Tile tile in boardManager.GetSurroundingTilesToTile(currentTile)) {
+				foreach (Tile tile in editorBoardManager.GetSurroundingTilesToTile(currentTile)) {
 					if (tile == null) {
 						continue;
 					}
 					frontierTiles.Enqueue(tile);
 				}
-				if (checkedTiles.Count == boardManager.BoardData.Tiles.Count) {
+				if (checkedTiles.Count == editorBoardManager.BoardData.Tiles.Count) {
 					return true;
 				}
 			}
@@ -72,8 +72,8 @@ namespace NBoardEditor
 
 		private bool ValidateSinglePath() {
 			bool alwaysTwoNeighbours = true;
-			foreach (Tile tile in boardManager.BoardData.Tiles) {
-				alwaysTwoNeighbours = boardManager.GetSurroundingTilesToTile(tile).Count(t => t != null) == 2;
+			foreach (Tile tile in editorBoardManager.BoardData.Tiles) {
+				alwaysTwoNeighbours = editorBoardManager.GetSurroundingTilesToTile(tile).Count(t => t != null) == 2;
 				if (!alwaysTwoNeighbours) {
 					break;
 				}

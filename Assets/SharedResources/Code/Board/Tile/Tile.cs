@@ -14,10 +14,10 @@ namespace NShared.Board
 		public TileTypeEnum TileType => tileType;
 		public ITileObject TileObject { get; private set; }
 
-		public Tile(Vector3Int position, TileTypeEnum tileType, ITileObject tileObject) {
+		public Tile(Vector3Int position, TileTypeEnum tileType, Material material, ITileObject tileObject) {
 			this.position = position;
 			TileObject = tileObject;
-			UpdateTileType(tileType);
+			UpdateTileType(tileType, material);
 		}
 
 		public Tile(Vector3Int position, TileTypeEnum tileType, Sprite tileTypeSprite, ITileObject tileObject) {
@@ -27,9 +27,9 @@ namespace NShared.Board
 			UpdateTileType(tileType, tileTypeSprite);
 		}
 
-		public void UpdateTileType(TileTypeEnum tileType) {
+		public void UpdateTileType(TileTypeEnum tileType, Material material) {
 			this.tileType = tileType;
-			// TODO Change the tile colour
+			TileObject.SetMaterial(material);
 		}
 
 		public void UpdateTileType(TileTypeEnum tileType, Sprite tileTypeSprite) {

@@ -9,13 +9,13 @@ namespace NBoardEditor
 {
 	public class BoardSerializer
 	{
-		private readonly BoardManager boardManager;
+		private readonly EditorBoardManager editorBoardManager;
 		private readonly BoardValidator boardValidator;
 		private readonly UIHandler uiHandler;
 
 		[Inject]
-		public BoardSerializer(BoardManager boardManager, BoardValidator boardValidator, UIHandler uiHandler) {
-			this.boardManager = boardManager;
+		public BoardSerializer(EditorBoardManager editorBoardManager, BoardValidator boardValidator, UIHandler uiHandler) {
+			this.editorBoardManager = editorBoardManager;
 			this.boardValidator = boardValidator;
 			this.uiHandler = uiHandler;
 
@@ -28,7 +28,7 @@ namespace NBoardEditor
 		}
 
 		private void OnSaveButtonClicked(string boardName) {
-			SerializeBoard(boardManager.BoardData, boardName);
+			SerializeBoard(editorBoardManager.BoardData, boardName);
 		}
 
 		private void SerializeBoard(BoardData boardData, string boardName) {
@@ -61,7 +61,7 @@ namespace NBoardEditor
 			BoardData boardData = JsonUtility.FromJson<BoardData>(json);
 			boardData.RestoreAfterDeserialization();
 
-			boardManager.RecreateBoard(boardData);
+			editorBoardManager.RecreateBoard(boardData);
 
 			uiHandler.OnBoardLoaded?.Invoke(Path.GetFileNameWithoutExtension(boardFile));
 
