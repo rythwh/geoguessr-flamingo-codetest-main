@@ -15,7 +15,7 @@ namespace NGame
 		private BoardData BoardData { get; } = new();
 
 		private float tilePositionRange = 0.02f;
-		private float tileHeightBase = -0.3f;
+		private float tileHeightBase = -0.17f;
 		private float tileHeightRange = 0.02f;
 		private float tileRotationRange = 4;
 		private float tileTiltRange = 2;
