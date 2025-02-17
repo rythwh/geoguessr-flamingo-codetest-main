@@ -1,9 +1,13 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Cysharp.Threading.Tasks;
 using NShared;
 using NShared.Board;
 using UnityEngine;
 using Zenject;
+using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 namespace NGame
 {
@@ -11,13 +15,15 @@ namespace NGame
 	{
 		private readonly TileTypeList tileTypeList;
 		private readonly Transform boardParent;
-		private BoardData BoardData { get; } = new();
+		public BoardData BoardData { get; } = new();
 
 		private const float TilePositionRange = 0.02f;
 		private const float TileHeightBase = -0.17f;
 		private const float TileHeightRange = 0.02f;
 		private const float TileRotationRange = 4;
 		private const float TileTiltRange = 2;
+
+		public event Action OnBoardLoaded;
 
 		[Inject]
 		public BoardManager(string boardFileName, TileTypeList tileTypeList, Transform boardParent) {
@@ -52,6 +58,8 @@ namespace NGame
 
 			Tile startTile = BoardData.GetStartTile();
 			boardParent.position -= new Vector3(startTile.Position.x, 0, startTile.Position.z);
+
+			OnBoardLoaded?.Invoke();
 		}
 
 		private Tile CreateTile(TileObject tilePrefab, Vector3Int gridPosition, TileTypeEnum selectedTileType) {
@@ -71,7 +79,12 @@ namespace NGame
 		}
 
 		private bool AddTile(Tile tile) {
-			return BoardData.Tiles.Add(tile);
+			bool uniqueTile = BoardData.Tiles.Add(tile);
+			if (uniqueTile) {
+				BoardData.OrderedTiles ??= new List<Tile>();
+				BoardData.OrderedTiles.Add(tile);
+			}
+			return uniqueTile;
 		}
 	}
 }

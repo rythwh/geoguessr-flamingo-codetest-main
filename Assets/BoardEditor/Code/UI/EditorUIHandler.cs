@@ -9,7 +9,9 @@ namespace NBoardEditor.UI
 {
 	public class EditorUIHandler
 	{
-		// This is mostly needed because my UI framework is not setup for DI, so I can't inject to Presenters, so I need a bridge between it and the non-UI code for events
+		// This is mostly needed because my UI framework is not setup for DI,
+		// and therefore I can't inject to Presenters,
+		// so I need a bridge between it and the non-UI code for events
 		public Action<TileType> OnTileTypeSelected;
 		public Action<bool, string> OnBoardValidationUpdated;
 

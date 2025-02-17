@@ -21,7 +21,35 @@ namespace NShared.Board
 		}
 
 		public Tile GetStartTile() {
-			return tiles.First(t => t.TileType == TileTypeEnum.Start);
+			return OrderedTiles.First(t => t.TileType == TileTypeEnum.Start);
+		}
+
+		public Tile GetNextTile(Tile currentTile, int distance) {
+			int index = OrderedTiles.IndexOf(currentTile);
+			int nextIndex = (index + distance) % OrderedTiles.Count;
+			return OrderedTiles[nextIndex];
+		}
+
+		public Vector3[] GetNextTilePath(Tile startTile, Tile endTile) {
+			int startIndex = OrderedTiles.IndexOf(startTile);
+			int endIndex = OrderedTiles.IndexOf(endTile);
+
+			Debug.Log($"{startIndex} -> {endIndex}");
+
+			List<Vector3> path = new();
+			if (endIndex < startIndex) { // Looped around past the Start tile
+				for (int i = startIndex; i < OrderedTiles.Count; i++) {
+					path.Add(OrderedTiles[i].TileObject.gameObject.transform.position);
+				}
+				for (int i = 0; i < endIndex + 1; i++) {
+					path.Add(OrderedTiles[i].TileObject.gameObject.transform.position);
+				}
+			} else {
+				for (int i = startIndex; i < endIndex + 1; i++) {
+					path.Add(OrderedTiles[i].TileObject.gameObject.transform.position);
+				}
+			}
+			return path.ToArray();
 		}
 	}
 }
