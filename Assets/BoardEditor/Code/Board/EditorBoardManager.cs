@@ -85,5 +85,53 @@ namespace NBoardEditor
 			BoardEditorTileObject tileObject = Object.Instantiate(TilePrefab, placementPosition, Quaternion.identity);
 			return new Tile(gridPosition, selectedTileType, tileTypeList.GetSprite(selectedTileType), tileObject);
 		}
+
+		public void DetermineBoardDirection() {
+
+			Tile startTile = BoardData.GetStartTile();
+
+			HashSet<Tile> checkedTiles = new() { startTile }; // For quick Contains checks (but doesn't maintain order)
+			List<Tile> orderedLoop = new() { startTile };
+			Queue<Tile> frontierTiles = new();
+
+			frontierTiles.Enqueue(GetSurroundingTilesToTile(startTile).First(t => t != null));
+			while (frontierTiles.Count > 0) {
+				Tile currentTile = frontierTiles.Dequeue();
+				if (checkedTiles.Contains(currentTile)) {
+					break;
+				}
+
+				orderedLoop.Add(currentTile);
+				checkedTiles.Add(currentTile);
+
+				Tile nextTile = GetSurroundingTilesToTile(currentTile).FirstOrDefault(t => t != null && !checkedTiles.Contains(t));
+				if (nextTile == null) {
+					break;
+				}
+				frontierTiles.Enqueue(nextTile);
+			}
+
+			if (CalculateShoelaceFormulaSignedArea(orderedLoop) > 0) {
+				orderedLoop.Reverse();
+			}
+
+			BoardData.OrderedTiles = orderedLoop;
+		}
+
+		// https://en.wikipedia.org/wiki/Shoelace_formula
+		// Takes an ordered loop (i.e. shape of points) and determines the "signed area", which is positive
+		// if the loop is counterclockwise, and negative if the loop is clockwise
+		// Used to ensure that the board is ordered clockwise so next-tile calculations can be simplified
+		private int CalculateShoelaceFormulaSignedArea(List<Tile> orderedLoop) {
+			int area = 0;
+			for (int i = 0; i < orderedLoop.Count; i++) {
+				Tile currentTile = orderedLoop[i];
+				Tile nextTile = orderedLoop[(i + 1) % orderedLoop.Count];
+
+				area += (currentTile.Position.x * nextTile.Position.y) - (nextTile.Position.x * currentTile.Position.y);
+			}
+
+			return area;
+		}
 	}
 }

@@ -3,6 +3,7 @@ using System.Linq;
 using Cysharp.Threading.Tasks;
 using JetBrains.Annotations;
 using NBoardEditor.UI.Elements;
+using NShared;
 using RyUI;
 
 namespace NBoardEditor.UI
@@ -12,17 +13,17 @@ namespace NBoardEditor.UI
 	public class UIBoardEditorPresenter : UIPresenter<UIBoardEditorView>
 	{
 		private readonly TileTypeList tileTypeList;
-		private readonly UIHandler uiHandler;
+		private readonly EditorUIHandler editorUIHandler;
 
 		public UIBoardEditorPresenter(UIBoardEditorView view, UIBoardEditorParameters parameters) : base(view) {
 			tileTypeList = parameters.TileTypeList;
-			uiHandler = parameters.UIHandler;
+			editorUIHandler = parameters.EditorUIHandler;
 
 			CreateTileTypeButtons().Forget();
-			uiHandler.OnBoardValidationUpdated += UpdateBoardValidationStatus;
+			editorUIHandler.OnBoardValidationUpdated += UpdateBoardValidationStatus;
 			View.OnLoadButtonClicked += LoadButtonClicked;
 			View.OnSaveButtonClicked += SaveButtonClicked;
-			uiHandler.OnBoardLoaded += OnBoardLoaded;
+			editorUIHandler.OnBoardLoaded += OnBoardLoaded;
 
 			View.SetBoardName($"board{DateTime.Now:yyyyMMddHHmmss}");
 		}
@@ -36,7 +37,7 @@ namespace NBoardEditor.UI
 		}
 
 		private void TileTypeButtonClicked(TileType tileType) {
-			uiHandler.OnTileTypeSelected?.Invoke(tileType);
+			editorUIHandler.OnTileTypeSelected?.Invoke(tileType);
 		}
 
 		private void UpdateBoardValidationStatus(bool passed, string message) {
@@ -44,11 +45,11 @@ namespace NBoardEditor.UI
 		}
 
 		private void LoadButtonClicked() {
-			uiHandler.OnLoadButtonClicked?.Invoke();
+			editorUIHandler.OnLoadButtonClicked?.Invoke();
 		}
 
 		private void SaveButtonClicked(string boardName) {
-			uiHandler.OnSaveButtonClicked?.Invoke(boardName);
+			editorUIHandler.OnSaveButtonClicked?.Invoke(boardName);
 		}
 
 		private void OnBoardLoaded(string boardName) {
@@ -58,7 +59,7 @@ namespace NBoardEditor.UI
 		public override void OnClose() {
 			base.OnClose();
 
-			uiHandler.OnBoardValidationUpdated -= UpdateBoardValidationStatus;
+			editorUIHandler.OnBoardValidationUpdated -= UpdateBoardValidationStatus;
 			View.OnLoadButtonClicked -= LoadButtonClicked;
 			View.OnSaveButtonClicked -= SaveButtonClicked;
 		}

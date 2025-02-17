@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using NBoardEditor;
 using NShared.Board;
 using UnityEngine;
 
-namespace NBoardEditor
+namespace NShared
 {
 	[CreateAssetMenu(fileName = "TileTypeList", menuName = "GeoGuessr/Board/TileTypeList", order = 1)]
 	public class TileTypeList : ScriptableObject

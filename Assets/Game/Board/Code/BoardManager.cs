@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using Cysharp.Threading.Tasks;
-using NBoardEditor;
 using NShared;
 using NShared.Board;
 using UnityEngine;
@@ -14,11 +13,11 @@ namespace NGame
 		private readonly Transform boardParent;
 		private BoardData BoardData { get; } = new();
 
-		private float tilePositionRange = 0.02f;
-		private float tileHeightBase = -0.17f;
-		private float tileHeightRange = 0.02f;
-		private float tileRotationRange = 4;
-		private float tileTiltRange = 2;
+		private const float TilePositionRange = 0.02f;
+		private const float TileHeightBase = -0.17f;
+		private const float TileHeightRange = 0.02f;
+		private const float TileRotationRange = 4;
+		private const float TileTiltRange = 2;
 
 		[Inject]
 		public BoardManager(string boardFileName, TileTypeList tileTypeList, Transform boardParent) {
@@ -57,13 +56,13 @@ namespace NGame
 
 		private Tile CreateTile(TileObject tilePrefab, Vector3Int gridPosition, TileTypeEnum selectedTileType) {
 
-			Vector3 placementPosition = gridPosition + (Vector3.one * Random.Range(-tilePositionRange, tilePositionRange));
-			placementPosition.y = tileHeightBase + Random.Range(-tileHeightRange, tileHeightRange);
+			Vector3 placementPosition = gridPosition + (Vector3.one * Random.Range(-TilePositionRange, TilePositionRange));
+			placementPosition.y = TileHeightBase + Random.Range(-TileHeightRange, TileHeightRange);
 
 			Quaternion placementRotation = Quaternion.Euler(
-				Random.Range(-tileTiltRange, tileTiltRange),
-				Random.Range(-tileRotationRange, tileRotationRange),
-				Random.Range(-tileTiltRange, tileTiltRange)
+				Random.Range(-TileTiltRange, TileTiltRange),
+				Random.Range(-TileRotationRange, TileRotationRange),
+				Random.Range(-TileTiltRange, TileTiltRange)
 			);
 
 			TileObject tileObject = Object.Instantiate(tilePrefab, placementPosition, placementRotation);

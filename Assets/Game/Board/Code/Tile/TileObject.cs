@@ -1,5 +1,4 @@
-﻿using System;
-using NShared.Board;
+﻿using NShared.Board;
 using UnityEngine;
 
 namespace NGame

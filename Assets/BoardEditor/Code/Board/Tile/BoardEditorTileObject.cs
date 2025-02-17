@@ -12,5 +12,9 @@ namespace NBoardEditor
 		public void SetImage(Sprite sprite) {
 			tileTypeImage.sprite = sprite;
 		}
+
+		public void SetColour(Color colour) {
+			tileMeshRenderer.material.color = colour;
+		}
 	}
 }

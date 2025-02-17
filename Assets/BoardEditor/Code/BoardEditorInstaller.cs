@@ -1,4 +1,5 @@
 using NBoardEditor.UI;
+using NShared;
 using RyUI;
 using UnityEngine;
 using Zenject;
@@ -18,16 +19,16 @@ namespace NBoardEditor
             Container.BindInstance(tileTypeListSO);
 
             Container.Bind<EditorBoardManager>().AsSingle().NonLazy();
-            Container.Bind<BoardSerializer>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BoardSerializer>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<UIManager>().AsSingle();
-            Container.Bind<UIHandler>().AsSingle().NonLazy();
+            Container.Bind<EditorUIHandler>().AsSingle().NonLazy();
 
             Container.BindInterfacesAndSelfTo<CameraManager>().AsSingle();
             Container.Bind<InputHandler>().AsSingle();
             Container.Bind<GridManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlacementHandler>().AsSingle();
-            Container.Bind<BoardValidator>().AsSingle().NonLazy();
+            Container.BindInterfacesAndSelfTo<BoardValidator>().AsSingle().NonLazy();
         }
     }
 }

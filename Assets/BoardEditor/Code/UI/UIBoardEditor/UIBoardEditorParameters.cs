@@ -1,15 +1,16 @@
-﻿using RyUI;
+﻿using NShared;
+using RyUI;
 
 namespace NBoardEditor.UI
 {
 	public class UIBoardEditorParameters : IUIParameters
 	{
 		public TileTypeList TileTypeList;
-		public UIHandler UIHandler;
+		public EditorUIHandler EditorUIHandler;
 
-		public UIBoardEditorParameters(TileTypeList tileTypeList, UIHandler uiHandler) {
+		public UIBoardEditorParameters(TileTypeList tileTypeList, EditorUIHandler editorUIHandler) {
 			TileTypeList = tileTypeList;
-			UIHandler = uiHandler;
+			EditorUIHandler = editorUIHandler;
 		}
 	}
 }

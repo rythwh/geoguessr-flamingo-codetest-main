@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using NBoardEditor.UI;
 using NShared.Board;
 using UnityEditor;
@@ -7,20 +8,25 @@ using Zenject;
 
 namespace NBoardEditor
 {
-	public class BoardSerializer
+	public class BoardSerializer : IDisposable
 	{
 		private readonly EditorBoardManager editorBoardManager;
 		private readonly BoardValidator boardValidator;
-		private readonly UIHandler uiHandler;
+		private readonly EditorUIHandler editorUIHandler;
 
 		[Inject]
-		public BoardSerializer(EditorBoardManager editorBoardManager, BoardValidator boardValidator, UIHandler uiHandler) {
+		public BoardSerializer(EditorBoardManager editorBoardManager, BoardValidator boardValidator, EditorUIHandler editorUIHandler) {
 			this.editorBoardManager = editorBoardManager;
 			this.boardValidator = boardValidator;
-			this.uiHandler = uiHandler;
+			this.editorUIHandler = editorUIHandler;
 
-			uiHandler.OnLoadButtonClicked += OnLoadButtonClicked;
-			uiHandler.OnSaveButtonClicked += OnSaveButtonClicked;
+			editorUIHandler.OnLoadButtonClicked += OnLoadButtonClicked;
+			editorUIHandler.OnSaveButtonClicked += OnSaveButtonClicked;
+		}
+
+		public void Dispose() {
+			editorUIHandler.OnLoadButtonClicked -= OnLoadButtonClicked;
+			editorUIHandler.OnSaveButtonClicked -= OnSaveButtonClicked;
 		}
 
 		private void OnLoadButtonClicked() {
@@ -41,8 +47,11 @@ namespace NBoardEditor
 				Directory.CreateDirectory(BoardData.BoardsFolderPath);
 			}
 
+			if (boardData.OrderedTiles == null || boardData.OrderedTiles.Count == 0) {
+				editorBoardManager.DetermineBoardDirection();
+			}
+
 			string boardPath = Path.Combine(BoardData.BoardsFolderPath, $"{boardName}.json");
-			boardData.PrepareForSerialization();
 			string boardJson = JsonUtility.ToJson(boardData, true);
 			File.WriteAllText(boardPath, boardJson);
 
@@ -63,7 +72,7 @@ namespace NBoardEditor
 
 			editorBoardManager.RecreateBoard(boardData);
 
-			uiHandler.OnBoardLoaded?.Invoke(Path.GetFileNameWithoutExtension(boardFile));
+			editorUIHandler.OnBoardLoaded?.Invoke(Path.GetFileNameWithoutExtension(boardFile));
 
 			Debug.Log($"Board loaded from: {boardFile}");
 		}

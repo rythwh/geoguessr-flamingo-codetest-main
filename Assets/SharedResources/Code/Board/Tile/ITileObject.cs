@@ -11,5 +11,8 @@ namespace NShared.Board
 
 		virtual void SetMaterial(Material material) {
 		}
+
+		virtual void SetColour(Color colour) {
+		}
 	}
 }

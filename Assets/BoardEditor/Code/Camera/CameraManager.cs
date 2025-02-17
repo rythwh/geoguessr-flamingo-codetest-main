@@ -27,7 +27,7 @@ namespace NBoardEditor
 			}
 
 			Camera.main.transform.position = new Vector3(1, 0, 1) * GridManager.GridRadius;
-			Camera.main.orthographicSize = GridManager.GridRadius * 1.1f;
+			Camera.main.orthographicSize = GridManager.GridRadius * 1.2f;
 		}
 
 		private void OnZoomPerformed(InputAction.CallbackContext context) {

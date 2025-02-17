@@ -19,7 +19,7 @@ namespace NBoardEditor
 		public event Action OnBoardUpdated;
 
 		[Inject]
-		public PlacementHandler(GridManager gridManager, EditorBoardManager editorBoardManager, InputHandler inputHandler, UIHandler uiHandler) {
+		public PlacementHandler(GridManager gridManager, EditorBoardManager editorBoardManager, InputHandler inputHandler, EditorUIHandler editorUIHandler) {
 			this.gridManager = gridManager;
 			this.editorBoardManager = editorBoardManager;
 			this.inputHandler = inputHandler;
@@ -27,7 +27,7 @@ namespace NBoardEditor
 			SetupInputActions();
 
 
-			uiHandler.OnTileTypeSelected += OnTileTypeSelected;
+			editorUIHandler.OnTileTypeSelected += OnTileTypeSelected;
 		}
 
 		private void OnTileTypeSelected(TileType tileType) {

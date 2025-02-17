@@ -14,14 +14,10 @@ namespace NShared.Board
 		[NonSerialized] private HashSet<Tile> tiles = new();
 		public HashSet<Tile> Tiles => tiles;
 
-		[SerializeField] private List<Tile> serializedTiles;
-
-		public void PrepareForSerialization() {
-			serializedTiles = new List<Tile>(tiles);
-		}
+		public List<Tile> OrderedTiles;
 
 		public void RestoreAfterDeserialization() {
-			tiles = new HashSet<Tile>(serializedTiles);
+			tiles = new HashSet<Tile>(OrderedTiles);
 		}
 
 		public Tile GetStartTile() {
