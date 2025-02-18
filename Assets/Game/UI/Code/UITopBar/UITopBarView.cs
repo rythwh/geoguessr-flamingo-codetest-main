@@ -1,7 +1,4 @@
-﻿using System;
-using RyUI;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using RyUI;
 
 namespace NGame.UI
 {

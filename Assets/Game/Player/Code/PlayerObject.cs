@@ -8,5 +8,6 @@ namespace NPlayer
 		public Animator Animator => animator;
 
 		public readonly int PlayerJumpingAnimation = Animator.StringToHash("PlayerJumping");
+		public readonly int PlayerIdleAnimation = Animator.StringToHash("Idle");
 	}
 }

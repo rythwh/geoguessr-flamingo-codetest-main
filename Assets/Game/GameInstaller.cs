@@ -34,5 +34,6 @@ public class GameInstaller : MonoInstaller
 		Container.Bind<UIHandler>().AsSingle().NonLazy();
 
 		Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle().NonLazy();
+		Container.Bind<PlayerProfile>().AsSingle().NonLazy();
 	}
 }
