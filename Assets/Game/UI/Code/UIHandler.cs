@@ -15,6 +15,7 @@ namespace NGame.UI
 		public UIHandler(UIManager uiManager, Canvas canvas) {
 			uiManager.canvas = canvas.transform;
 
+			uiManager.OpenViewAsync<UITopBar>().Forget();
 			uiManager.OpenViewAsync<UITravelButton>(null, new UITravelButtonParameters(this), true, false).Forget();
 		}
 	}
