@@ -5,6 +5,8 @@ namespace NShared.Board
 	public interface ITileObject
 	{
 		GameObject gameObject { get; }
+		Renderer Renderer { get; }
+		Transform TileButtonTransform { get; }
 
 		virtual void SetImage(Sprite sprite) {
 		}

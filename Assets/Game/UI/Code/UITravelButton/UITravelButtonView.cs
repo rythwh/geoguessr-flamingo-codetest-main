@@ -19,5 +19,9 @@ namespace NGame.UI
 		public override void OnClose() {
 			travelButton.onClick.RemoveListener(() => OnTravelButtonClicked?.Invoke());
 		}
+
+		public void SetTravelButtonInteractable(bool interactable) {
+			travelButton.interactable = interactable;
+		}
 	}
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using DG.Tweening;
 using NGame;
 using NGame.Camera;
@@ -18,6 +20,9 @@ namespace NPlayer
 		private readonly CameraAnchor cameraAnchor;
 
 		private Tile currentPlayerTile;
+
+		private const float moveTweenDuration = 0.3f;
+		private bool blockInput = false;
 
 		[Inject]
 		public PlayerController(
@@ -42,7 +47,12 @@ namespace NPlayer
 
 		private void OnTravelButtonClicked() {
 
+			if (blockInput) {
+				return;
+			}
+
 			int roll = Random.Range(1, 11);
+			Debug.Log($"Rolled {roll}");
 
 			Tile startTile = currentPlayerTile;
 			Tile endTile = boardManager.BoardData.GetNextTile(startTile, roll);
@@ -51,27 +61,73 @@ namespace NPlayer
 			MoveCameraAlongPath(startTile, endTile);
 		}
 
-		private void MovePlayerTo(Tile startTile, Tile endTile) {
+		public void MovePlayerTo(Tile startTile, Tile endTile) {
+			SetInputBlock(true);
+			List<Tile> path = boardManager.BoardData.GetNextTilePath(startTile, endTile);
+			playerObject.Animator.enabled = true;
+			MovePlayerToTilePosition(path, 0);
 
-			Vector3[] path = boardManager.BoardData.GetNextTilePath(startTile, endTile);
-			cameraAnchor.transform.DOPath(path, path.Length, PathType.CatmullRom, PathMode.Full3D);
-
-			MovePlayerAlongPath(startTile, endTile);
 		}
 
-		private void MovePlayerAlongPath(Tile startTile, Tile endTile) {
-			Vector3[] path = boardManager.BoardData.GetNextTilePath(startTile, endTile);
+		private void MovePlayerToTilePosition(List<Tile> path, int index) {
+			if (index >= path.Count) {
+				return;
+			}
+
+			Tile tile = path[index];
+
 			playerObject.transform
-				.DOPath(path, path.Length, PathType.CatmullRom, PathMode.Full3D)
-				.SetEase(Ease.Linear)
-				.OnWaypointChange(w => Debug.Log(w))
-				.OnComplete(() => SetPlayerPositionOnTile(endTile));
+				.DOJump(GetPathPointPosition(tile), 0.5f, 1, moveTweenDuration);
+			playerObject.transform
+				.DOMoveX(GetPathPointPosition(tile).x, moveTweenDuration)
+				.OnComplete(() => OnCompletePlayerMove(path, index));
+			playerObject.transform
+				.DOMoveZ(GetPathPointPosition(tile).z, moveTweenDuration);
+
+			playerObject.Animator.CrossFade(playerObject.PlayerJumpingAnimation, 1f);
+
+			Material tileMaterial = tile.TileObject.Renderer.material;
+			Color tileColour = tileMaterial.color * 1.5f;
+
+			tileMaterial.DOColor(tileColour, moveTweenDuration / 2f)
+				.SetDelay(moveTweenDuration)
+				.SetLoops(2, LoopType.Yoyo);
+
+			Vector3 tileButtonPosition = tile.TileObject.TileButtonTransform.position;
+			tile.TileObject.TileButtonTransform
+				.DOJump(tileButtonPosition, -0.1f, 1, moveTweenDuration / 2f)
+				.SetDelay(moveTweenDuration);
+		}
+
+		private Vector3 GetPathPointPosition(Tile tile) {
+			Vector3 pathPoint = tile.TileObject.gameObject.transform.position;
+			pathPoint.y = 0.3f;
+			return pathPoint;
+		}
+
+		private void OnCompletePlayerMove(List<Tile> path, int pathIndex) {
+			pathIndex += 1;
+			if (pathIndex >= path.Count) {
+				playerObject.Animator.CrossFade("Idle", 1f);
+				SetPlayerPositionOnTile(path[^1]);
+				SetInputBlock(false);
+				return;
+			}
+			MovePlayerToTilePosition(path, pathIndex);
+		}
+
+		private void SetInputBlock(bool state) {
+			blockInput = state;
+			uiHandler.OnInputBlockChanged?.Invoke(blockInput);
 		}
 
 		private void MoveCameraAlongPath(Tile startTile, Tile endTile) {
-			Vector3[] path = boardManager.BoardData.GetNextTilePath(startTile, endTile);
+			Vector3[] path = boardManager.BoardData
+				.GetNextTilePath(startTile, endTile)
+				.Select(t => t.TileObject.gameObject.transform.position)
+				.ToArray();
 			cameraAnchor.transform
-				.DOPath(path, path.Length, PathType.CatmullRom, PathMode.Full3D)
+				.DOPath(path, path.Length * moveTweenDuration, PathType.CatmullRom, PathMode.Full3D)
 				.SetEase(Ease.Linear);
 		}
 

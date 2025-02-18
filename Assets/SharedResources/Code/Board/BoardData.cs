@@ -30,26 +30,30 @@ namespace NShared.Board
 			return OrderedTiles[nextIndex];
 		}
 
-		public Vector3[] GetNextTilePath(Tile startTile, Tile endTile) {
-			int startIndex = OrderedTiles.IndexOf(startTile);
+		public List<Tile> GetNextTilePath(Tile startTile, Tile endTile) {
+			int startIndex = OrderedTiles.IndexOf(startTile) + 1;
 			int endIndex = OrderedTiles.IndexOf(endTile);
 
-			Debug.Log($"{startIndex} -> {endIndex}");
-
-			List<Vector3> path = new();
+			List<Tile> path = new();
 			if (endIndex < startIndex) { // Looped around past the Start tile
 				for (int i = startIndex; i < OrderedTiles.Count; i++) {
-					path.Add(OrderedTiles[i].TileObject.gameObject.transform.position);
+					path.Add(GetPathPoint(i));
 				}
 				for (int i = 0; i < endIndex + 1; i++) {
-					path.Add(OrderedTiles[i].TileObject.gameObject.transform.position);
+					path.Add(GetPathPoint(i));
 				}
 			} else {
 				for (int i = startIndex; i < endIndex + 1; i++) {
-					path.Add(OrderedTiles[i].TileObject.gameObject.transform.position);
+					path.Add(GetPathPoint(i));
 				}
 			}
-			return path.ToArray();
+			return path;
+		}
+
+		private Tile GetPathPoint(int index) {
+
+			Tile tile = OrderedTiles[index];
+			return tile;
 		}
 	}
 }

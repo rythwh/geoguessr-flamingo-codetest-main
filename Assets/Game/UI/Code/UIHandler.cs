@@ -9,6 +9,7 @@ namespace NGame.UI
 	public class UIHandler
 	{
 		public Action OnTravelButtonClicked;
+		public Action<bool> OnInputBlockChanged;
 
 		[Inject]
 		public UIHandler(UIManager uiManager, Canvas canvas) {

@@ -7,24 +7,28 @@ namespace NGame.UI
 	[UsedImplicitly]
 	public class UITravelButtonPresenter : UIPresenter<UITravelButtonView>
 	{
-		private readonly UITravelButtonParameters parameters;
 		private readonly UIHandler uiHandler;
 
 		public UITravelButtonPresenter(UITravelButtonView view, UITravelButtonParameters parameters) : base(view) {
-			this.parameters = parameters;
 			uiHandler = parameters.UIHandler;
 		}
 
 		public override void OnCreate() {
 			View.OnTravelButtonClicked += OnTravelButtonClicked;
+			uiHandler.OnInputBlockChanged += OnInputBlockChanged;
 		}
 
 		public override void OnClose() {
 			View.OnTravelButtonClicked -= OnTravelButtonClicked;
+			uiHandler.OnInputBlockChanged -= OnInputBlockChanged;
 		}
 
 		private void OnTravelButtonClicked() {
 			uiHandler.OnTravelButtonClicked?.Invoke();
+		}
+
+		private void OnInputBlockChanged(bool inputBlock) {
+			View.SetTravelButtonInteractable(!inputBlock);
 		}
 	}
 }
