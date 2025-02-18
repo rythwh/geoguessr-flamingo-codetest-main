@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NShared.Board;
 using UnityEngine;
 
@@ -9,6 +10,6 @@ namespace NBoardEditor
 	{
 		public TileTypeEnum tileType;
 		public Sprite tileImage;
-		public Material tileMaterial;
+		public List<Material> tileMaterials;
 	}
 }
