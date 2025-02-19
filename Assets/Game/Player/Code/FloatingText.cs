@@ -7,6 +7,7 @@ public class FloatingText : MonoBehaviour
 	[SerializeField] private TMP_Text text;
 
 	private void Start() {
+		canvas.worldCamera = Camera.main;
 		canvas.transform.LookAt(Camera.main?.transform);
 		canvas.transform.Rotate(0, 180, Random.Range(-20, 20));
 	}
