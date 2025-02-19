@@ -24,7 +24,7 @@ namespace NBoardEditor
             Container.BindInterfacesAndSelfTo<UIManager>().AsSingle();
             Container.Bind<EditorUIHandler>().AsSingle().NonLazy();
 
-            Container.BindInterfacesAndSelfTo<CameraManager>().AsSingle();
+            Container.Bind<CameraManager>().AsSingle().NonLazy();
             Container.Bind<InputHandler>().AsSingle();
             Container.Bind<GridManager>().AsSingle();
             Container.BindInterfacesAndSelfTo<PlacementHandler>().AsSingle();

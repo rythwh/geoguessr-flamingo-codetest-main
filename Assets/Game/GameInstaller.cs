@@ -1,7 +1,8 @@
 using NGame;
 using NGame.Camera;
 using NGame.UI;
-using NPlayer;
+using NGame.Player;
+using NGame.Quiz;
 using NShared;
 using RyUI;
 using UnityEngine;
@@ -35,5 +36,7 @@ public class GameInstaller : MonoInstaller
 
 		Container.BindInterfacesAndSelfTo<PlayerController>().AsSingle().NonLazy();
 		Container.Bind<PlayerProfile>().AsSingle().NonLazy();
+
+		Container.BindInterfacesAndSelfTo<QuizManager>().AsSingle().NonLazy();
 	}
 }

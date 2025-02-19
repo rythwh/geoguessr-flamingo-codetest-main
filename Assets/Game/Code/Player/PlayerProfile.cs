@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace NPlayer
+namespace NGame.Player
 {
 	public class PlayerProfile
 	{

@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using NGame;
 using NGame.Camera;
 using NGame.UI;
 using NShared;
@@ -13,7 +12,7 @@ using Zenject;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
 
-namespace NPlayer
+namespace NGame.Player
 {
 	public class PlayerController : IDisposable
 	{
@@ -27,8 +26,11 @@ namespace NPlayer
 
 		private Tile currentPlayerTile;
 
-		private const float moveTweenDuration = 0.3f;
+		private const float MoveTweenDuration = 0.3f;
 		private bool blockInput = false;
+
+		private const int EmptyTileCoins = 1000;
+		private const int StartTileCoins = 10000;
 
 		public event Action<Tile> OnPlayerMovedToTile;
 
@@ -77,7 +79,7 @@ namespace NPlayer
 			MoveCameraAlongPath(startTile, endTile);
 		}
 
-		public void MovePlayerTo(Tile startTile, Tile endTile) {
+		private void MovePlayerTo(Tile startTile, Tile endTile) {
 			SetInputBlock(true);
 			List<Tile> path = boardManager.BoardData.GetNextTilePath(startTile, endTile);
 			playerObject.Animator.enabled = true;
@@ -93,26 +95,26 @@ namespace NPlayer
 			Tile tile = path[index];
 
 			playerObject.transform
-				.DOJump(GetPathPointPosition(tile), 0.5f, 1, moveTweenDuration);
+				.DOJump(GetPathPointPosition(tile), 0.5f, 1, MoveTweenDuration);
 			playerObject.transform
-				.DOMoveX(GetPathPointPosition(tile).x, moveTweenDuration)
+				.DOMoveX(GetPathPointPosition(tile).x, MoveTweenDuration)
 				.OnComplete(() => OnCompletePlayerMove(path, index));
 			playerObject.transform
-				.DOMoveZ(GetPathPointPosition(tile).z, moveTweenDuration);
+				.DOMoveZ(GetPathPointPosition(tile).z, MoveTweenDuration);
 
 			playerObject.Animator.CrossFade(playerObject.PlayerJumpingAnimation, 1f);
 
 			Material tileMaterial = tile.TileObject.Renderer.material;
 			Color tileColour = tileMaterial.color * 1.5f;
 
-			tileMaterial.DOColor(tileColour, moveTweenDuration / 2f)
-				.SetDelay(moveTweenDuration)
+			tileMaterial.DOColor(tileColour, MoveTweenDuration / 2f)
+				.SetDelay(MoveTweenDuration)
 				.SetLoops(2, LoopType.Yoyo);
 
 			Vector3 tileButtonPosition = tile.TileObject.TileButtonTransform.position;
 			tile.TileObject.TileButtonTransform
-				.DOJump(tileButtonPosition, -0.2f, 1, moveTweenDuration / 2f)
-				.SetDelay(moveTweenDuration);
+				.DOJump(tileButtonPosition, -0.2f, 1, MoveTweenDuration / 2f)
+				.SetDelay(MoveTweenDuration);
 		}
 
 		private Vector3 GetPathPointPosition(Tile tile) {
@@ -123,18 +125,13 @@ namespace NPlayer
 
 		private void OnCompletePlayerMove(List<Tile> path, int pathIndex) {
 
-			if (path[pathIndex].TileType == TileTypeEnum.Start) {
+			if (pathIndex != path.Count - 1 && path[pathIndex].TileType == TileTypeEnum.Start) {
 				EvaluateLandedTile(path[pathIndex]);
 			}
 
 			pathIndex += 1;
 			if (pathIndex >= path.Count) {
-				Tile tile = path[^1];
-				playerObject.Animator.CrossFade(playerObject.PlayerIdleAnimation, 1f);
-				SetPlayerPositionOnTile(tile);
-				SetInputBlock(false);
-				OnPlayerMovedToTile?.Invoke(tile);
-				EvaluateLandedTile(tile);
+				OnLandedOnEndTile(path[^1]);
 				return;
 			}
 			MovePlayerToTilePosition(path, pathIndex);
@@ -151,8 +148,16 @@ namespace NPlayer
 				.Select(t => t.TileObject.gameObject.transform.position)
 				.ToArray();
 			cameraAnchor.transform
-				.DOPath(path, path.Length * moveTweenDuration, PathType.CatmullRom, PathMode.Full3D)
+				.DOPath(path, path.Length * MoveTweenDuration, PathType.CatmullRom, PathMode.Full3D)
 				.SetEase(Ease.Linear);
+		}
+
+		private void OnLandedOnEndTile(Tile tile) {
+			playerObject.Animator.CrossFade(playerObject.PlayerIdleAnimation, 1f);
+			SetPlayerPositionOnTile(tile);
+			SetInputBlock(false);
+			OnPlayerMovedToTile?.Invoke(tile);
+			EvaluateLandedTile(tile);
 		}
 
 		private void SetPlayerPositionOnTile(Tile tile) {
@@ -164,19 +169,13 @@ namespace NPlayer
 		private void EvaluateLandedTile(Tile tile) {
 			switch (tile.TileType) {
 				case TileTypeEnum.Empty:
-					playerProfile.AddCoins(1000);
-					CreateFloatingText("+1000").Forget();
+					playerProfile.AddCoins(EmptyTileCoins);
+					CreateFloatingText($"+{EmptyTileCoins}").Forget();
 					break;
 				case TileTypeEnum.Start:
-					playerProfile.AddCoins(10000);
-					CreateFloatingText("+10000").Forget();
+					playerProfile.AddCoins(StartTileCoins);
+					CreateFloatingText($"+{StartTileCoins}").Forget();
 					break;
-				case TileTypeEnum.Quiz:
-					break;
-				case TileTypeEnum.QuizFlag:
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
 			}
 		}
 
@@ -184,7 +183,7 @@ namespace NPlayer
 			await UniTask.WaitUntil(() => floatingTextPrefab != null);
 			FloatingText floatingText = Object.Instantiate(
 				floatingTextPrefab,
-				playerObject.transform.position + (Vector3.up * 1.5f),
+				playerObject.transform.position + (Vector3.up * 1.6f),
 				Quaternion.identity
 			);
 			floatingText.SetText(text);

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Quizzes
+  m_EditorClassIdentifier: 
+  m_GroupName: Quizzes
+  m_GUID: b7cda25681b66a54f97e17edb7258638
+  m_SerializeEntries:
+  - m_GUID: 66588a69ef43e4ed288f156ecfd7e532
+    m_Address: FlagQuizData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 952f70ada48f2445494217015362263b
+    m_Address: TextQuizData
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: 93af0a863b03b644b83f69ed6c10d2a7, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 44bcccb8e69342d439109bd72695db2a, type: 2}
+    - {fileID: 11400000, guid: 983b71a3ed4727742bb5032ec5e84f62, type: 2}

@@ -15,43 +15,8 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: bce8ac75c41d0f2498529d147c1716de
   m_SerializeEntries:
-  - m_GUID: 3e7cb15866b2044c4821d261c3bfeeb2
-    m_Address: Player
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5d65a722cdd3f99449590e2a09bdc495
-    m_Address: UI/Element/UITileTypeButton
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6cfc3c3604750e345befe994aee2741c
-    m_Address: UI/UITravelButton
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6db570ee2ff02c44a9b068f3e380e0cd
-    m_Address: UI/UITopBar
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6f71035a42fb3bc438b304808bcecc03
-    m_Address: UI/UIBoardEditor
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: ac9ed95cda4cfce48bf551bfd62b0db7
-    m_Address: BoardEditor/EditorTile
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d02d8f50c75ed5d4e94362d7d19379fe
-    m_Address: Board/Tile
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: fa536cc0628a58d43a02d23b3f26e2a6
-    m_Address: Player/FloatingText
+  - m_GUID: d3b22ff241c0f404db6386f71a26cb21
+    m_Address: UI/Element/UIQuizFlagAnswerButton
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
