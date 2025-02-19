@@ -21,7 +21,12 @@ namespace NShared.Board
 		}
 
 		public Tile GetStartTile() {
-			return OrderedTiles.First(t => t.TileType == TileTypeEnum.Start);
+			Tile startTile = OrderedTiles?.FirstOrDefault(t => t.TileType == TileTypeEnum.Start);
+			if (startTile != null) {
+				return startTile;
+			}
+			startTile = tiles?.FirstOrDefault(t => t.TileType == TileTypeEnum.Start);
+			return startTile;
 		}
 
 		public Tile GetNextTile(Tile currentTile, int distance) {

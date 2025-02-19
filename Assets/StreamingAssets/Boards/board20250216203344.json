@@ -38,7 +38,7 @@
                 "y": 1,
                 "z": 5
             },
-            "tileType": 0
+            "tileType": 3
         },
         {
             "position": {
@@ -70,7 +70,7 @@
                 "y": 1,
                 "z": 6
             },
-            "tileType": 0
+            "tileType": 2
         },
         {
             "position": {
@@ -94,7 +94,7 @@
                 "y": 1,
                 "z": 7
             },
-            "tileType": 0
+            "tileType": 3
         },
         {
             "position": {
@@ -134,7 +134,7 @@
                 "y": 1,
                 "z": 11
             },
-            "tileType": 0
+            "tileType": 3
         },
         {
             "position": {
@@ -166,7 +166,7 @@
                 "y": 1,
                 "z": 14
             },
-            "tileType": 0
+            "tileType": 2
         },
         {
             "position": {
@@ -222,7 +222,7 @@
                 "y": 1,
                 "z": 14
             },
-            "tileType": 0
+            "tileType": 2
         },
         {
             "position": {
@@ -238,7 +238,7 @@
                 "y": 1,
                 "z": 13
             },
-            "tileType": 0
+            "tileType": 3
         },
         {
             "position": {
@@ -286,7 +286,7 @@
                 "y": 1,
                 "z": 10
             },
-            "tileType": 0
+            "tileType": 2
         },
         {
             "position": {

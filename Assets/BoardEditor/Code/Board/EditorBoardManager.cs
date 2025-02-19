@@ -90,11 +90,20 @@ namespace NBoardEditor
 
 			Tile startTile = BoardData.GetStartTile();
 
+			if (startTile == null) {
+				return;
+			}
+
 			HashSet<Tile> checkedTiles = new() { startTile }; // For quick Contains checks (but doesn't maintain order)
 			List<Tile> orderedLoop = new() { startTile };
 			Queue<Tile> frontierTiles = new();
 
-			frontierTiles.Enqueue(GetSurroundingTilesToTile(startTile).First(t => t != null));
+			Tile initialMoveTile = GetSurroundingTilesToTile(startTile).FirstOrDefault(t => t != null);
+			if (initialMoveTile == null) {
+				return;
+			}
+			frontierTiles.Enqueue(initialMoveTile);
+
 			while (frontierTiles.Count > 0) {
 				Tile currentTile = frontierTiles.Dequeue();
 				if (checkedTiles.Contains(currentTile)) {
