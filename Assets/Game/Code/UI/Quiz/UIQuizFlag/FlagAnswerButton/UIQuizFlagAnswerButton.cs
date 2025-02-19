@@ -27,8 +27,11 @@ namespace NGame.UI.FlagAnswerButton
 		}
 
 		public void SetCorrectState(Answer chosenAnswer, Answer correctAnswer, bool correct) {
-			if (answer == chosenAnswer || answer == correctAnswer) {
-				Component.SetCorrectState(correct);
+			if (answer == chosenAnswer) {
+				Component.SetCorrectState(false);
+			}
+			if (answer == correctAnswer) {
+				Component.SetCorrectState(true);
 			}
 		}
 	}

@@ -17,6 +17,9 @@ namespace NGame.UI
 
 		protected readonly List<IUIQuizAnswerButton> answerButtons = new();
 
+		private const int CorrectReward = 10000;
+		private const int IncorrectReward = 1000;
+
 		public UIQuizPresenter(TView view, UIQuizParameters parameters) : base(view) {
 			this.parameters = parameters;
 			quizData = parameters.QuizData;
@@ -47,22 +50,25 @@ namespace NGame.UI
 			foreach (IUIQuizAnswerButton answerButton in answerButtons) {
 				answerButton.SetCorrectState(selectedAnswer, quizData.GetCorrectAnswer(), correct);
 			}
-			await UniTask.WaitForSeconds(2);
+			await UniTask.WaitForSeconds(1);
 			TransitionToPostAnswer(selectedAnswer, correct);
 		}
 
 		private void TransitionToPostAnswer(Answer answer, bool correct) {
 
-			View.SetAnswerResultText(correct ? "Well Done!" : "You'll get it right next time!");
-			View.SetCorrectAnswerText(answer.Text);
-			View.SetCoinsAmountText(correct ? 10000 : 1000);
+			int reward = correct ? CorrectReward : IncorrectReward;
 
-			View.CloseButton.onClick.AddListener(OnCloseButtonClicked);
+			View.SetAnswerResultText(correct ? "Well Done!" : "You'll get it right next time!", correct);
+			View.SetCorrectAnswerText(quizData.GetCorrectAnswer().Text);
+			View.SetCoinsAmountText(reward);
+
+			View.CloseButton.onClick.AddListener(() => OnCloseButtonClicked(reward));
 
 			View.SetPostAnswerActive();
 		}
 
-		private void OnCloseButtonClicked() {
+		private void OnCloseButtonClicked(int reward) {
+			parameters.UIHandler.OnQuizCompleted?.Invoke(reward);
 			parameters.UIManager.CloseView(this);
 		}
 	}

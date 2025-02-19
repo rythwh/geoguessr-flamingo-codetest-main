@@ -1,15 +1,22 @@
 ﻿using RyUI;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
 
 namespace NGame.UI
 {
 	public class UITopBarView : UIView
 	{
-		public override void OnOpen() {
+		[SerializeField] private TMP_Text rollAmountText;
+		[SerializeField] private TMP_Text coinAmountText;
 
+		public void SetCoinAmount(int coins) {
+			coinAmountText.SetText(coins.ToString());
+			LayoutRebuilder.ForceRebuildLayoutImmediate(coinAmountText.rectTransform);
 		}
 
-		public override void OnClose() {
-
+		public void SetRollAmount(int roll) {
+			rollAmountText.SetText(roll.ToString());
 		}
 	}
 }

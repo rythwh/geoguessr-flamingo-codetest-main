@@ -16,6 +16,8 @@ namespace NGame.UI
 		[Header("(Parent) Post-Answer")]
 		[SerializeField] private GameObject postAnswerContainer;
 		[SerializeField] private TMP_Text answerResultText;
+		[SerializeField] private Color correctAnswerTextColor;
+		[SerializeField] private Color incorrectAnswerTextColor;
 		[SerializeField] private TMP_Text correctAnswerText;
 		[SerializeField] private TMP_Text coinsAmountText;
 		[SerializeField] private Button closeButton;
@@ -33,8 +35,9 @@ namespace NGame.UI
 			postAnswerContainer.SetActive(true);
 		}
 
-		public void SetAnswerResultText(string text) {
+		public void SetAnswerResultText(string text, bool correct) {
 			answerResultText.SetText(text);
+			answerResultText.color = correct ? correctAnswerTextColor : incorrectAnswerTextColor;
 		}
 
 		public void SetCorrectAnswerText(string text) {

@@ -52,6 +52,7 @@ namespace NGame.Player
 
 			boardManager.OnBoardLoaded += OnBoardLoaded;
 			uiHandler.OnTravelButtonClicked += OnTravelButtonClicked;
+			uiHandler.OnQuizCompleted += OnQuizCompleted;
 		}
 
 		private async UniTaskVoid LoadFloatingText() {
@@ -70,7 +71,7 @@ namespace NGame.Player
 			}
 
 			int roll = Random.Range(1, 11);
-			Debug.Log($"Rolled {roll}");
+			uiHandler.OnPlayerRolled?.Invoke(roll);
 
 			Tile startTile = currentPlayerTile;
 			Tile endTile = boardManager.BoardData.GetNextTile(startTile, roll);
@@ -170,30 +171,35 @@ namespace NGame.Player
 			switch (tile.TileType) {
 				case TileTypeEnum.Empty:
 					playerProfile.AddCoins(EmptyTileCoins);
-					CreateFloatingText($"+{EmptyTileCoins}").Forget();
+					CreateFloatingText(EmptyTileCoins).Forget();
 					break;
 				case TileTypeEnum.Start:
 					playerProfile.AddCoins(StartTileCoins);
-					CreateFloatingText($"+{StartTileCoins}").Forget();
+					CreateFloatingText(StartTileCoins).Forget();
 					break;
 			}
 		}
 
-		private async UniTask CreateFloatingText(string text) {
+		private async UniTask CreateFloatingText(int amount) {
 			await UniTask.WaitUntil(() => floatingTextPrefab != null);
 			FloatingText floatingText = Object.Instantiate(
 				floatingTextPrefab,
 				playerObject.transform.position + (Vector3.up * 1.6f),
 				Quaternion.identity
 			);
-			floatingText.SetText(text);
+			floatingText.SetText($"+{amount}");
 			await UniTask.WaitForSeconds(2);
 			Object.Destroy(floatingText.gameObject);
+		}
+
+		private void OnQuizCompleted(int coinAmount) {
+			CreateFloatingText(coinAmount).Forget();
 		}
 
 		public void Dispose() {
 			boardManager.OnBoardLoaded -= OnBoardLoaded;
 			uiHandler.OnTravelButtonClicked -= OnTravelButtonClicked;
+			uiHandler.OnQuizCompleted -= OnQuizCompleted;
 		}
 	}
 }

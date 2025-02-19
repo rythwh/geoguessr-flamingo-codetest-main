@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace NGame.Player
 {
@@ -7,8 +8,11 @@ namespace NGame.Player
 		[SerializeField] private int coins = 0;
 		public int Coins => coins;
 
+		public event Action<int, int> OnCoinsAdded;
+
 		public void AddCoins(int amount) {
 			coins += amount;
+			OnCoinsAdded?.Invoke(amount, coins);
 		}
 	}
 }

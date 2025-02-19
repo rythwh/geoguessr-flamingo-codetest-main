@@ -392,7 +392,7 @@ PrefabInstance:
     - target: {fileID: 3044703787645582144, guid: f407343777276064e8444487f042471f,
         type: 3}
       propertyPath: m_fontSize
-      value: 18
+      value: 34.85
       objectReference: {fileID: 0}
     - target: {fileID: 3329315238374599986, guid: f407343777276064e8444487f042471f,
         type: 3}
@@ -700,6 +700,8 @@ MonoBehaviour:
   answerButtonsLayoutGroup: {fileID: 6822436455682571035}
   postAnswerContainer: {fileID: 548108711332578028}
   answerResultText: {fileID: 5261506116997759618}
+  correctAnswerTextColor: {r: 0.22745098, g: 0.3882353, b: 0.67058825, a: 1}
+  incorrectAnswerTextColor: {r: 0.7294118, g: 0.47843137, b: 0.4745098, a: 1}
   correctAnswerText: {fileID: 7452794849090598407}
   coinsAmountText: {fileID: 8024475050275173572}
   closeButton: {fileID: 2842277930947697285}

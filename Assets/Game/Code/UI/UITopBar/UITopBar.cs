@@ -2,7 +2,7 @@
 
 namespace NGame.UI
 {
-	public class UITopBar : UIConfig<UITopBarView, UITopBarPresenter>
+	public class UITopBar : UIConfig<UITopBarView, UITopBarPresenter, UITopBarParameters>
 	{
 
 	}

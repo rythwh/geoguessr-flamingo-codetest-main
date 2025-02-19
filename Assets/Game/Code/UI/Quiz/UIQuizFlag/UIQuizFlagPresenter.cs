@@ -25,6 +25,8 @@ namespace NGame.UI
 			View.SetQuestionTarget(questionTarget);
 
 			CreateAnswerButtons().Forget();
+
+			SetCorrectAnswerFlag().Forget();
 		}
 
 		private async UniTask CreateAnswerButtons() {
@@ -38,10 +40,18 @@ namespace NGame.UI
 			}
 		}
 
-		private async UniTask SetAnswerFlag(UIQuizFlagAnswerButton button) {
-			AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(button.Answer.ImageID);
+		private async UniTask<Sprite> GetFlag(string id) {
+			AsyncOperationHandle<Sprite> handle = Addressables.LoadAssetAsync<Sprite>(id);
 			handle.ReleaseHandleOnCompletion();
-			button.SetFlagImage(await handle);
+			return await handle;
+		}
+
+		private async UniTask SetAnswerFlag(UIQuizFlagAnswerButton button) {
+			button.SetFlagImage(await GetFlag(button.Answer.ImageID));
+		}
+
+		private async UniTask SetCorrectAnswerFlag() {
+			View.SetCorrectAnswerFlag(await GetFlag(quizData.GetCorrectAnswer().ImageID));
 		}
 	}
 }

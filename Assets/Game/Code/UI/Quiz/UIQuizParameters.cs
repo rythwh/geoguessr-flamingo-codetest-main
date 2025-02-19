@@ -7,13 +7,16 @@ namespace NGame.UI
 	{
 		public readonly QuizData QuizData;
 		public readonly UIManager UIManager;
+		public readonly UIHandler UIHandler;
 
 		public UIQuizParameters(
 			QuizData quizData,
-			UIManager uiManager
+			UIManager uiManager,
+			UIHandler uiHandler
 		) {
 			QuizData = quizData;
 			UIManager = uiManager;
+			UIHandler = uiHandler;
 		}
 	}
 }

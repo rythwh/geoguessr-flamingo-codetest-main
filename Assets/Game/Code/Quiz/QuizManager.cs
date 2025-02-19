@@ -15,18 +15,24 @@ namespace NGame.Quiz
 	{
 		private readonly PlayerController playerController;
 		private readonly UIManager uiManager;
+		private readonly PlayerProfile playerProfile;
+		private readonly UIHandler uiHandler;
 
 		private Dictionary<QuestionType, List<QuizData>> quizzes = new();
 		private Dictionary<QuestionType, List<QuizData>> usedQuizzes = new();
 
 		[Inject]
-		public QuizManager(PlayerController playerController, UIManager uiManager) {
+		public QuizManager(PlayerController playerController, UIManager uiManager, PlayerProfile playerProfile, UIHandler uiHandler) {
 			this.playerController = playerController;
 			this.uiManager = uiManager;
+			this.playerProfile = playerProfile;
+			this.uiHandler = uiHandler;
 
 			DeserializeQuizzes();
 
 			playerController.OnPlayerMovedToTile += OnPlayerMovedToTile;
+
+			uiHandler.OnQuizCompleted += playerProfile.AddCoins;
 		}
 
 		private void DeserializeQuizzes() {
@@ -71,7 +77,7 @@ namespace NGame.Quiz
 				return;
 			}
 
-			UIQuizParameters parameters = new UIQuizParameters(quiz, uiManager);
+			UIQuizParameters parameters = new UIQuizParameters(quiz, uiManager, uiHandler);
 			switch (questionType) {
 				case QuestionType.Text:
 					uiManager.OpenViewAsync<UIQuizText>(null, parameters, true, false);
