@@ -14,17 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_GroupName: Quizzes
   m_GUID: b7cda25681b66a54f97e17edb7258638
-  m_SerializeEntries:
-  - m_GUID: 66588a69ef43e4ed288f156ecfd7e532
-    m_Address: FlagQuizData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 952f70ada48f2445494217015362263b
-    m_Address: TextQuizData
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
+  m_SerializeEntries: []
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 93af0a863b03b644b83f69ed6c10d2a7, type: 2}
   m_SchemaSet:

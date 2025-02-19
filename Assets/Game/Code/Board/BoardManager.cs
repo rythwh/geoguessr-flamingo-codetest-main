@@ -5,6 +5,7 @@ using Cysharp.Threading.Tasks;
 using NShared;
 using NShared.Board;
 using UnityEngine;
+using UnityEngine.Networking;
 using Zenject;
 using Object = UnityEngine.Object;
 using Random = UnityEngine.Random;
@@ -30,18 +31,32 @@ namespace NGame
 			this.tileTypeList = tileTypeList;
 			this.boardParent = boardParent;
 
-			LoadBoardLayout(boardFileName);
+			LoadBoardLayout(boardFileName).Forget();
 		}
 
 		private async UniTask<TileObject> LoadTilePrefab() {
 			return await Addressable.Load<TileObject>("Board/Tile");
 		}
 
-		private void LoadBoardLayout(string boardFileName) {
+		private async UniTask LoadBoardLayout(string boardFileName) {
 
 			string boardFile = Path.Combine(BoardData.BoardsFolderPath, $"{boardFileName}.json");
 
-			string json = File.ReadAllText(boardFile);
+			if (Application.platform == RuntimePlatform.Android) {
+				boardFile = $"jar:file://{boardFile}";
+			}
+
+			string json;
+			using (UnityWebRequest request = UnityWebRequest.Get(boardFile)) {
+				await request.SendWebRequest();
+				if (request.result == UnityWebRequest.Result.Success) {
+					json = request.downloadHandler.text;
+				} else {
+					Debug.LogError($"Failed to load board layout: {request.error}");
+					return;
+				}
+			}
+
 			BoardData loadedBoardData = JsonUtility.FromJson<BoardData>(json);
 			loadedBoardData.RestoreAfterDeserialization();
 

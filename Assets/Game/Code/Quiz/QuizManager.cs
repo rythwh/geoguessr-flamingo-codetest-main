@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using Cysharp.Threading.Tasks;
 using NGame.Player;
 using NGame.UI;
 using NShared.Board;
 using RyUI;
 using UnityEngine;
+using UnityEngine.Networking;
 using Zenject;
 using Random = UnityEngine.Random;
 
@@ -28,17 +30,29 @@ namespace NGame.Quiz
 			this.playerProfile = playerProfile;
 			this.uiHandler = uiHandler;
 
-			DeserializeQuizzes();
+			DeserializeQuizzes().Forget();
 
 			playerController.OnPlayerMovedToTile += OnPlayerMovedToTile;
 
 			uiHandler.OnQuizCompleted += playerProfile.AddCoins;
 		}
 
-		private void DeserializeQuizzes() {
+		private async UniTask DeserializeQuizzes() {
 			foreach (QuestionType questionType in Enum.GetValues(typeof(QuestionType))) {
 				string quizFile = Path.Combine(QuizData.QuizFolderPath, $"{questionType}QuizData.json");
-				string json = File.ReadAllText(quizFile);
+				if (Application.platform == RuntimePlatform.Android) {
+					quizFile = $"jar:file://{quizFile}";
+				}
+				string json;
+				using (UnityWebRequest request = UnityWebRequest.Get(quizFile)) {
+					await request.SendWebRequest();
+					if (request.result == UnityWebRequest.Result.Success) {
+						json = request.downloadHandler.text;
+					} else {
+						Debug.LogError($"Failed to load quizzes: {request.error}");
+						return;
+					}
+				}
 				QuizData quizData = JsonUtility.FromJson<QuizData>(json);
 				if (!quizzes.TryAdd(questionType, new List<QuizData>() { quizData })) {
 					quizzes[questionType].Add(quizData);
