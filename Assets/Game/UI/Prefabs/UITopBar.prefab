@@ -861,6 +861,42 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 32
       objectReference: {fileID: 0}
+    - target: {fileID: 550457748625435961, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 881ceeb16de3cd447945c5ee098956dd,
+        type: 2}
+    - target: {fileID: 550457748625435961, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
+        type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.20784315
+      objectReference: {fileID: 0}
+    - target: {fileID: 550457748625435961, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
+        type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.36078432
+      objectReference: {fileID: 0}
+    - target: {fileID: 550457748625435961, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
+        type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.5882353
+      objectReference: {fileID: 0}
+    - target: {fileID: 550457748625435961, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 8abc7b543dd115c4f8d845a2de996efc, type: 2}
+    - target: {fileID: 550457748625435961, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
+        type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281687190
+      objectReference: {fileID: 0}
+    - target: {fileID: 550457748625435961, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
+        type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1167722077754099901, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
         type: 3}
       propertyPath: m_Name
@@ -889,7 +925,7 @@ PrefabInstance:
     - target: {fileID: 4678681822880113406, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 103.145
+      value: 102.175
       objectReference: {fileID: 0}
     - target: {fileID: 4678681822880113406, guid: 48b24c2733eaf5c45b8d8b9cf57e946e,
         type: 3}

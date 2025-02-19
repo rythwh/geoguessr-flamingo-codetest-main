@@ -64,7 +64,7 @@ namespace NGame.UI
 
 			View.CloseButton.onClick.AddListener(() => OnCloseButtonClicked(reward));
 
-			View.SetPostAnswerActive();
+			View.SetPostAnswerActive(true);
 		}
 
 		private void OnCloseButtonClicked(int reward) {

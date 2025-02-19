@@ -21,6 +21,8 @@ namespace NGame.UI
 			string questionHeader = questionWords.SkipLast(1).Join(" ");
 			string questionTarget = questionWords.TakeLast(1).First();
 
+			View.SetTitle("Flags");
+
 			View.SetQuestion(questionHeader);
 			View.SetQuestionTarget(questionTarget);
 

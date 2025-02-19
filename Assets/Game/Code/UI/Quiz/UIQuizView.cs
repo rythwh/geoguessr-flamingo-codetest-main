@@ -23,6 +23,12 @@ namespace NGame.UI
 		[SerializeField] private Button closeButton;
 		public Button CloseButton => closeButton;
 
+		public override void OnOpen() {
+			base.OnOpen();
+
+			SetPostAnswerActive(false);
+		}
+
 		public void SetTitle(string title) {
 			titleText.SetText(title);
 		}
@@ -31,8 +37,8 @@ namespace NGame.UI
 			questionText.SetText(question);
 		}
 
-		public void SetPostAnswerActive() {
-			postAnswerContainer.SetActive(true);
+		public void SetPostAnswerActive(bool active) {
+			postAnswerContainer.SetActive(active);
 		}
 
 		public void SetAnswerResultText(string text, bool correct) {
