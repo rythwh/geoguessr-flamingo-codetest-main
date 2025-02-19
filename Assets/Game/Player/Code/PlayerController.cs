@@ -111,7 +111,7 @@ namespace NPlayer
 
 			Vector3 tileButtonPosition = tile.TileObject.TileButtonTransform.position;
 			tile.TileObject.TileButtonTransform
-				.DOJump(tileButtonPosition, -0.1f, 1, moveTweenDuration / 2f)
+				.DOJump(tileButtonPosition, -0.2f, 1, moveTweenDuration / 2f)
 				.SetDelay(moveTweenDuration);
 		}
 
