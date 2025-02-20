@@ -67,8 +67,8 @@ MonoBehaviour:
   m_SourceFontFileGUID: 475e82cee11a34b46bdda8c68914c5d5
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: 475e82cee11a34b46bdda8c68914c5d5,
     type: 3}
-  m_SourceFontFile: {fileID: 12800000, guid: 475e82cee11a34b46bdda8c68914c5d5, type: 3}
-  m_AtlasPopulationMode: 1
+  m_SourceFontFile: {fileID: 0}
+  m_AtlasPopulationMode: 0
   m_FaceInfo:
     m_FaceIndex: 0
     m_FamilyName: Trebuchet MS

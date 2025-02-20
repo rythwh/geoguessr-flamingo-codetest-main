@@ -15,8 +15,13 @@ MonoBehaviour:
   m_GroupName: Default Local Group
   m_GUID: bce8ac75c41d0f2498529d147c1716de
   m_SerializeEntries:
-  - m_GUID: d3b22ff241c0f404db6386f71a26cb21
-    m_Address: UI/Element/UIQuizFlagAnswerButton
+  - m_GUID: 2cd7cf2396888fa439da0f3401f553c6
+    m_Address: Assets/Game/SpriteAtlases/game-ui-atlas.spriteatlasv2
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 9a00928b5f246714794daa60762772e2
+    m_Address: Assets/BoardEditor/SpriteAtlases/board_editor-ui-spriteatlas.spriteatlasv2
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0

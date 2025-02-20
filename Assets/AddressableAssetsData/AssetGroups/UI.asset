@@ -20,11 +20,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 5d65a722cdd3f99449590e2a09bdc495
-    m_Address: UI/Element/UITileTypeButton
-    m_ReadOnly: 0
-    m_SerializedLabels: []
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 6cfc3c3604750e345befe994aee2741c
     m_Address: UI/UITravelButton
     m_ReadOnly: 0
@@ -35,13 +30,13 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 6f71035a42fb3bc438b304808bcecc03
-    m_Address: UI/UIBoardEditor
+  - m_GUID: c51d05416c51de04dba592266a3c020d
+    m_Address: UI/UIQuizFlag
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: c51d05416c51de04dba592266a3c020d
-    m_Address: UI/UIQuizFlag
+  - m_GUID: d3b22ff241c0f404db6386f71a26cb21
+    m_Address: UI/Element/UIQuizFlagAnswerButton
     m_ReadOnly: 0
     m_SerializedLabels: []
     FlaggedDuringContentUpdateRestriction: 0
