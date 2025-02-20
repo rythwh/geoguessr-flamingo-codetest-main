@@ -13,7 +13,14 @@
         "GUID:00815d277d20fce4da9790a6c7e52480"
     ],
     "includePlatforms": [
-        "Editor"
+        "Editor",
+        "EmbeddedLinux",
+        "LinuxStandalone64",
+        "CloudRendering",
+        "macOSStandalone",
+        "WSA",
+        "WindowsStandalone32",
+        "WindowsStandalone64"
     ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
